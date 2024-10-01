@@ -1,8 +1,8 @@
 import math
 import random
-'''
+
+
 #1
-#programa
 n = float(input())
 try:
     print(math.sqrt(n))
@@ -10,8 +10,8 @@ except ValueError:
     print("Tiene que ser un caracter numerico")
 except:
     print("Ha ocurrido un error")
-'''
-'''
+
+    
 #2
 lista = []
 n = int(input())
@@ -31,7 +31,8 @@ while error != 3:
     except:
         print("Ha ocurrido un error")
 print(lista)
-'''
+
+
 #3
 num_azar = random.randint(1,500)
 intento = 0
@@ -65,3 +66,4 @@ while adivinar != num_azar:
     except:
         print("Ha ocurrido un error")
 print(f"Adivinaste el numero en {intento} intentos") 
+
