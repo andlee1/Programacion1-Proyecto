@@ -6,7 +6,10 @@ def validar_dni(cad):
     pos: devuelve True si encuentra (match) y False si no
     '''
     patron = "^[0-9]{8}$"
-    return re.match(patron,cad) 
+    if re.match(patron,cad):
+        return True
+    else:
+        return False 
     
 def validar_email(cad):
     '''
@@ -14,7 +17,10 @@ def validar_email(cad):
     pos: devuelve True si encuentra (match) y False si no
     '''
     patron = "^[a-zA-Z0-9.-_+][^@]+@[a-zA-Z0-9]+\.[a-z]+$"
-    return re.match(patron,cad)
+    if re.match(patron,cad):
+        return True
+    else:
+        return False
 
 def validar_telefono(cad):
     '''
@@ -22,18 +28,19 @@ def validar_telefono(cad):
     pos: devuelve True si encuentra (match) y False si no
     '''
     patron = "[0-9]{4}-[0-9]{6,}"
-    return re.match(patron,cad)
+    if re.match(patron,cad):
+        return True
+    else:
+        return False
 
 def validar_id():
-    flag = True
-    while flag:
+    while True:
         try:
             num = int(input("ID: "))
-            assert (num > 0), "Debe ser un numero entre 1 y 6"
-            assert (num < 7), "Debe ser un numero entre 1 y 6"
-            break
+            assert (num > 0), "Debe ser un positivo"
+            break #Salir del ciclo
         except ValueError:
-            print("Valor incorrecto, debe ser un numero entre 1 y 6")
+            print("Valor incorrecto, debe ser un numero")
         except AssertionError as er:
             print(er)
         except:
@@ -41,16 +48,29 @@ def validar_id():
     return num
 
 def validar_precio(): 
-    flag = True
-    while flag:
+    while True:
         try:
             precio = int(input("Nuevo precio: "))
             assert (precio > 0), "El numero debe ser positivo"
-            break
+            break #Salir del ciclo
         except ValueError:
-            print("El precio tiene que ser un numero entero positivo")
+            print("El precio tiene que ser un numero")
         except AssertionError as er:
             print(er)
         except:
             print("Ha ocurrido un error")
     return precio
+
+def validar_cantidad():
+    while True:
+        try:
+            num = int(input("Cantidad: "))
+            assert (num > 0), "El numero debe ser mayor o igual a 1"
+            break #Salir del ciclo si no hay error
+        except AssertionError as e:
+            print(e)
+        except ValueError:
+            print("Debe ingresar un numero")
+        except:
+            print("Ha ocurrido un error")
+    return num
