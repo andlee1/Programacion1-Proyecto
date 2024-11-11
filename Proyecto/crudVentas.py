@@ -64,9 +64,9 @@ def comprar_producto(archivo_stock, archivo_clientes,archivo_ventas):
         producto = validaciones.validar_id()
 
     cantidad = validaciones.validar_cantidad()
+
     conjunto_clientes = set(diccionario.keys())
     dni = input("DNI (XXXXXXXX): ")
-
     while not validaciones.validar_dni(dni) or dni not in conjunto_clientes:
         if dni not in conjunto_clientes:
             dni = input("Ingrese un dni existente: ")
@@ -91,8 +91,52 @@ def comprar_producto(archivo_stock, archivo_clientes,archivo_ventas):
                     str(precio_total)])
                 
     append_datos(archivo_ventas,lista_v)                 
-    matriz_str = [[str(j) for j in i] for i in matriz_e] #paso todos los elementos a str
+    matriz_str = [[str(j) for j in i] for i in matriz_e] #pasar todo a str para escribir el archivo
     cargar_datos(archivo_stock, matriz_str)
+
+
+def devolver_producto(archivo_stock, archivo_ventas):
+    '''
+    pre: recibe archivo de stock y archivo de ventas.
+    pos: devolver un producto, actualiza el stock y elimina o actualiza la venta.
+    '''
+    # Cargar los datos de ventas y stock
+    matriz_ventas = crear_matriz(archivo_ventas)
+    matriz_stock = crear_matriz(archivo_stock)
+
+    dni = input("Ingrese su DNI para buscar compras: ")
+    while not validaciones.validar_dni(dni):
+        dni = input("Ingrese un DNI válido (XXXXXXXX): ")
+
+    # Comprar del cliente, no se puede usar mostrar_compras_cliente() porque trabaja con archivos
+    compras_cliente = [lista for lista in matriz_ventas if lista[1] == dni]
+
+    print(f'{"Nombre":^15} {"DNI":^9} {"Producto":^10} {"Cantidad":^10} {"Precio":^8}')
+    for nombre, dni, producto, cantidad, precio_total in compras_cliente: 
+        print(f'{nombre:^15} {dni:^9} {producto:^10} {cantidad:^10} {precio_total:^8}')
+
+    # Seleccionar compra a devolver
+    num_compra = validaciones.validar_id()
+    while num_compra not in range(1, len(compras_cliente) + 1):
+        print("No se encontro la compra")
+        num_compra = validaciones.validar_id()
+
+    compra_seleccionada = compras_cliente[int(num_compra) - 1]
+
+    # Actualizar stock
+    for fila in matriz_stock:
+        if fila[1] == compra_seleccionada[2]:  # Comparar por nombre de producto
+            fila[3] = str(int(fila[3]) + int(compra_seleccionada[3]))  # Actualizar cantidad de stock
+
+    # Remover la compra de la lista de ventas
+    matriz_ventas.remove(compra_seleccionada)
+
+    # Guardar cambios en los archivos
+    cargar_datos(archivo_ventas, matriz_ventas)
+    cargar_datos(archivo_stock, matriz_stock)
+
+    print("Producto devuelto")
+
 
 def mostar_compras_cliente(archivo_ventas):
     '''
@@ -100,7 +144,7 @@ def mostar_compras_cliente(archivo_ventas):
     pos: retorna matriz recortada cuando coincide la clave con elemento de la fila 
     '''
     matriz = crear_matriz(archivo_ventas)
-    dni = input("Ingrse su DNI:")
+    dni = input("Ingrse su DNI: ")
     while not validaciones.validar_dni(dni):
         dni = input("Ingese un dni valido (XXXXXXXX): ")
 

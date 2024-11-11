@@ -1,11 +1,9 @@
-import crudElectr
-import crudCliente
-import crudVentas
+import crudCliente,crudVentas,crudElectr
 
 #Programa Principal
-archivo_productos = r'Proyecto\electro.txt'
-archivo_clientes = r'Proyecto\cliente.json'
-archivo_ventas = r'Proyecto\ventas.txt'
+archivo_productos = r'Proyecto\Archivos\electro.txt'
+archivo_clientes = r'Proyecto\Archivos\cliente.json'
+archivo_ventas = r'Proyecto\Archivos\ventas.txt'
 
 semaforo_main = True
 while semaforo_main:
@@ -108,12 +106,13 @@ while semaforo_main:
         while semaforo_crud:
             print()
             print("1-Comprar producto")
-            print("2-Mostrar historial por cliente")
-            print("3-Mostrar historial de todas las compras")
+            print("2-Devolver producto")
+            print("3-Mostrar historial por cliente")
+            print("4-Mostrar historial de todas las compras")
             try:
                 opcion_ventas = int(input("(-1) Salir "))
                 print()
-                if opcion_ventas not in [-1,1,2,3]:
+                if opcion_ventas not in [-1,1,2,3,4]:
                     print("Ingrese una opcion valida")
                     continue
             except ValueError:
@@ -125,9 +124,10 @@ while semaforo_main:
             if opcion_ventas == -1:
                 semaforo_crud = False
             if opcion_ventas == 1:
-                #Capturar valores
                 crudVentas.comprar_producto(archivo_productos, archivo_clientes, archivo_ventas)
             if opcion_ventas == 2:
+                crudVentas.devolver_producto(archivo_productos, archivo_ventas)
+            if opcion_ventas == 3:
                 ventas_cliente = crudVentas.mostar_compras_cliente(archivo_ventas)
                 if len(ventas_cliente) == 0:
                     print("Este DNI no realizo ninguna compra ")
@@ -135,5 +135,5 @@ while semaforo_main:
                     print(f'{"Nombre":^15} {"DNI":^9} {"Producto":^10} {"Cantidad":^10} {"Precio":^8}')
                     for nombre, dni, producto, cantidad, precio_total in ventas_cliente:
                         print(f'{nombre:^15} {dni:^9} {producto:^10} {cantidad:^10} {precio_total:^8}')
-            if opcion_ventas == 3:
+            if opcion_ventas == 4:
                 crudVentas.mostrar_ventas(archivo_ventas)

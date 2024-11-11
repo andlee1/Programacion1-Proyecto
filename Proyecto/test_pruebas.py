@@ -1,5 +1,6 @@
 from validaciones import validar_dni,validar_email,validar_telefono
 import re
+
 def test_validar_dni():
 	assert(validar_dni("46249731")) == True
 	assert(validar_dni("abcdefgh")) == False
