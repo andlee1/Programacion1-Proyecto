@@ -1,7 +1,0 @@
-1;heladera;900;5
-2;horno;850;10
-3;microondas;560;10
-4;lavarropas;650;10
-5;horno electrico;450;8
-6;secadora;700;10
-7;lavarropa;500;10

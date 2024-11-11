@@ -1,3 +1,0 @@
-Ana Martinez;23456789;heladera;2;1800
-Ana Martinez;23456789;heladera;3;2700
-Ana Martinez;23456789;horno el;2;900
